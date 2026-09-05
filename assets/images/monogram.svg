@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <!-- Subtle circular crest border -->
+  <circle cx="60" cy="60" r="54" stroke="#C5A880" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.6"/>
+  <circle cx="60" cy="60" r="50" stroke="#C5A880" stroke-width="1.2" opacity="0.85"/>
+  
+  <!-- Monogram Letters M & S -->
+  <g font-family="'Cinzel', 'Cormorant Garamond', serif" font-weight="400" fill="#C5A880" text-anchor="middle">
+    <!-- M letter -->
+    <text x="46" y="69" font-size="34" letter-spacing="1">M</text>
+    <!-- Ampersand -->
+    <text x="60" y="58" font-size="16" font-style="italic" opacity="0.75" font-family="'Cormorant Garamond', serif">&amp;</text>
+    <!-- S letter -->
+    <text x="74" y="73" font-size="34" letter-spacing="1">S</text>
+  </g>
+  
+  <!-- Subtle accent dots -->
+  <circle cx="60" cy="22" r="1.5" fill="#C5A880" opacity="0.7"/>
+  <circle cx="60" cy="98" r="1.5" fill="#C5A880" opacity="0.7"/>
+</svg>

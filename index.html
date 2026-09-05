@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Makarious Nagy &amp; Sarah Hany — 11.10.2026</title>
+
+  <!-- Open Graph / WhatsApp Preview Meta Tags -->
+  <meta property="og:title" content="Makarious Nagy &amp; Sarah Hany — Wedding Invitation">
+  <meta property="og:description"
+    content="Makarious Nagy &amp; Sarah Hany. It wouldn’t be the same without you there. Sunday, 11 October 2026 — Cairo, Egypt.">
+  <meta property="og:image" content="assets/images/hero-cover.jpg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#111111">
+
+  <!-- Google Fonts: Cormorant Garamond, Cinzel, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@200;300;400;500&display=swap"
+    rel="stylesheet">
+
+  <link rel="icon" href="assets/images/monogram.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="is-locked">
+
+  <!-- AUDIO ELEMENT & MINIMALIST FLOATING ICON -->
+  <audio id="wedding-audio" loop preload="auto">
+    <source src="assets/audio/ambient-love.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Minimal Sound Toggle (Single elegant musical glyph) -->
+  <button id="audio-toggle" class="audio-btn is-hidden" aria-label="Toggle ambient sound" title="Toggle sound">
+    <span class="audio-glyph">♪</span>
+    <span class="audio-pulse"></span>
+  </button>
+
+  <!-- 1. OPENING COVER (QUIET LUXURY PRINTED STATIONERY) -->
+  <section id="opening-cover" class="cover-section" aria-label="Wedding Invitation Cover">
+    <div class="cover-paper-backdrop" aria-hidden="true"></div>
+
+    <div class="cover-card" id="cover-card">
+      <div class="cover-card-inner">
+        <p class="cover-kicker">WE SAVED THIS MOMENT FOR YOU</p>
+
+        <div class="cover-names-wrap">
+          <h1 class="cover-names">
+            <span class="cover-name">Makarious</span>
+            <span class="cover-amp" aria-hidden="true">&amp;</span>
+            <span class="cover-name">Sarah</span>
+          </h1>
+        </div>
+
+        <!-- Single restrained deep-wine accent: tiny bespoke calligraphy ink stroke -->
+        <div class="cover-wine-stroke" aria-hidden="true">
+          <svg width="38" height="4" viewBox="0 0 38 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 1.5 2.2 C 11.5 1.0, 26 2.8, 36.5 1.8" stroke="#4E1318" stroke-width="1.2"
+              stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <p class="cover-date">11 · 10 · 2026</p>
+
+        <button id="btn-open-invitation" class="cover-open-cue" type="button" aria-label="Open wedding invitation">
+          <span class="open-cue-text">OPEN INVITATION</span>
+          <span class="open-cue-line" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTIMATE PERSONAL NOTE INTERLUDE AFTER OPEN -->
+  <div id="personal-note-interlude" class="personal-note-interlude" aria-live="polite">
+    <div class="personal-note-card">
+      <p class="personal-note-lead" id="personal-note-lead">THIS ONE’S FOR YOU.</p>
+      <p class="personal-note-sub" id="personal-note-sub">We’re so happy you’re here.</p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTINUOUS INVITATION JOURNEY -->
+  <main id="invitation-main" class="invitation-container">
+
+    <!-- 2 & 3. CONTINUOUS INVITATION & CEREMONY SUITE (PERSONAL COPY) -->
+    <div class="suite-wrapper">
+      <div class="suite-embossed scroll-reveal">
+        <div class="monogram-emboss">
+          <img src="assets/images/monogram.svg" alt="Makarious Nagy and Sarah Hany Monogram" class="monogram-img"
+            width="52" height="52">
+        </div>
+
+        <p class="suite-honor">TOGETHER WITH THEIR FAMILIES</p>
+
+        <h2 class="suite-names">
+          <span>MAKARIOUS NAGY</span>
+          <span class="suite-amp">&amp;</span>
+          <span>SARAH HANY</span>
+        </h2>
+
+        <!-- Warm personal copy -->
+        <p class="suite-phrase" data-live-write>
+          It wouldn’t be the same<br>
+          without you there.
+        </p>
+        <div class="suite-phrase-underline-wrap" aria-hidden="true">
+          <svg class="wine-underline-svg" viewBox="0 0 160 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 4 5 C 45 2, 95 6, 156 3.5" stroke="#4E1318" stroke-width="1.2" stroke-linecap="round"
+              opacity="0.6" />
+          </svg>
+        </div>
+
+        <div class="suite-divider-line">
+          <span class="line-wing"></span>
+          <span class="line-diamond">◆</span>
+          <span class="line-wing"></span>
+        </div>
+
+        <!-- Date & Ceremony -->
+        <div class="suite-ceremony-flow">
+          <p class="suite-calendar-day">SUNDAY</p>
+          <p class="suite-calendar-date">11 · 10 · 2026</p>
+
+          <div class="ceremony-direct">
+            <p class="ceremony-time">7:00 PM</p>
+            <h3 class="venue-name">THE GRAND NILE PALACE</h3>
+            <p class="venue-location">Qena, EGYPT</p>
+            <a href="https://maps.google.com/?q=Cairo,Egypt" target="_blank" rel="noopener noreferrer"
+              class="btn-location-inline">
+              VIEW LOCATION ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Soft Page Transition Accent 1 (Invitation to Countdown) -->
+    <div class="scene-transition-accent" aria-hidden="true">
+      <svg class="accent-stroke-svg" width="56" height="6" viewBox="0 0 56 6" fill="none">
+        <path class="accent-path-burgundy" d="M 2 3 C 18 1.5, 38 4.5, 54 2.8" stroke="#4E1318" stroke-width="1" stroke-linecap="round"/>
+        <circle class="accent-dot-gold" cx="28" cy="3" r="1.1" fill="#C5A880"/>
+      </svg>
+    </div>
+
+    <section class="countdown-moment" id="countdown-moment" aria-label="Countdown to the wedding">
+      <!-- Subtle ambient depth wash instead of rose -->
+      <div class="countdown-ambient-wash" aria-hidden="true"></div>
+
+      <div class="countdown-composition scroll-reveal">
+        <h2 class="countdown-heading">Until we say <em>“I do”</em></h2>
+
+        <div class="countdown-units" id="countdown">
+          <div class="cd-block">
+            <span class="cd-num" id="cd-days">—</span>
+            <span class="cd-label">Days</span>
+          </div>
+          <div class="cd-block">
+            <span class="cd-num" id="cd-hours">—</span>
+            <span class="cd-label">Hours</span>
+          </div>
+          <div class="cd-block">
+            <span class="cd-num" id="cd-minutes">—</span>
+            <span class="cd-label">Minutes</span>
+          </div>
+          <div class="cd-block">
+            <span class="cd-num" id="cd-seconds">—</span>
+            <span class="cd-label">Seconds</span>
+          </div>
+        </div>
+
+        <div class="cal-stationery" aria-label="October 2026, the eleventh highlighted">
+          <p class="cal-month">October 2026</p>
+          <div class="cal-weekdays" aria-hidden="true">
+            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+          </div>
+          <div class="cal-grid">
+            <span class="cal-empty"></span>
+            <span class="cal-empty"></span>
+            <span class="cal-empty"></span>
+            <span class="cal-empty"></span>
+            <span>1</span><span>2</span><span>3</span>
+            <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+            <span class="cal-day is-wedding">
+              11
+              <svg class="cal-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <path
+                  d="M12.2 25.4c-3.2-9.4 5.4-18.6 16.1-17.8 9.8.7 18.4 9.6 15.6 19.2-2.8 9.6-14.8 15.8-23.6 11.4C12.8 34.8 8.6 29.2 12.2 25.4Z"
+                  fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                <path d="M10.4 28.1c3.1 1.6 5.4-.4 4.2-2.8" fill="none" stroke="currentColor" stroke-width="0.9"
+                  stroke-linecap="round" />
+              </svg>
+            </span>
+            <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+            <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+            <span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TRANSPARENT DETAIL: BESPOKE HANDWRITTEN SIGNATURE ELEMENT -->
+    <div class="transparent-detail-wrap scroll-reveal">
+      <img src="assets/images/handwritten-signature.svg" alt="Makarious Nagy &amp; Sarah Hany Signature"
+        class="handwritten-signature-img">
+    </div>
+
+    <!-- Soft Page Transition Accent 2 (Countdown to Gallery) -->
+    <div class="scene-transition-accent" aria-hidden="true">
+      <svg class="accent-stroke-svg" width="56" height="6" viewBox="0 0 56 6" fill="none">
+        <path class="accent-path-burgundy" d="M 2 3 C 18 1.5, 38 4.5, 54 2.8" stroke="#4E1318" stroke-width="1" stroke-linecap="round"/>
+        <circle class="accent-dot-gold" cx="28" cy="3" r="1.1" fill="#C5A880"/>
+      </svg>
+    </div>
+
+    <!-- 1. CONSOLIDATED PHOTO GALLERY: "OUR LITTLE WORLD" -->
+    <section class="consolidated-gallery" id="consolidated-gallery">
+
+      <!-- Emotional Opening: Archival Childhood to Adult Transformation -->
+      <div class="gallery-opening-moment" id="node-childhood">
+        <p class="opening-whisper scroll-reveal">Two little lives.</p>
+        <p class="gallery-red-phrase">this is us<span class="red-underline" aria-hidden="true"></span></p>
+
+        <div class="childhood-stage" id="childhood-stage">
+          <!-- Archival childhood memory print -->
+          <div class="childhood-print" id="childhood-print">
+            <img src="assets/images/childhood-memory.jpg" alt="Childhood memories of Makarious Nagy and Sarah Hany"
+              class="childhood-img">
+            <div class="print-border-edge"></div>
+          </div>
+          <!-- Natural crossfade into adult couple portrait -->
+          <div class="adult-crossfade" id="adult-crossfade">
+            <img src="assets/images/couple-moment.jpg" alt="Makarious Nagy and Sarah Hany together" class="adult-img"
+              loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery Introduction Heading -->
+      <div class="gallery-header scroll-reveal">
+        <span class="gallery-kicker">A GLIMPSE OF US</span>
+        <h3 class="gallery-heading">OUR LITTLE WORLD</h3>
+      </div>
+
+      <!-- Primary Interactive Swipe Ribbon (Curated Moments) -->
+      <div class="gallery-ribbon-wrapper" id="horizontal-module">
+        <div class="ribbon-viewport">
+          <div class="ribbon-stream" id="horizontal-track">
+            <div class="ribbon-frame frame-1">
+              <img src="assets/images/horizontal-1.jpg" alt="Candid moment 1" loading="lazy">
+            </div>
+            <div class="ribbon-frame frame-2 offset-down">
+              <img src="assets/images/stack-1.jpg" alt="Candid moment 2" loading="lazy">
+            </div>
+            <div class="ribbon-frame frame-3">
+              <img src="assets/images/horizontal-2.jpg" alt="Candid moment 3" loading="lazy">
+            </div>
+            <div class="ribbon-frame frame-4 offset-up">
+              <img src="assets/images/stack-2.jpg" alt="Candid moment 4" loading="lazy">
+            </div>
+            <div class="ribbon-frame frame-5">
+              <img src="assets/images/horizontal-3.jpg" alt="Candid moment 5" loading="lazy">
+            </div>
+            <div class="ribbon-frame frame-6 offset-down">
+              <img src="assets/images/horizontal-4.jpg" alt="Candid moment 6" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <p class="swipe-subtle-hint">Swipe to explore</p>
+      </div>
+
+      <!-- Single Cinematic Immersion Moment -->
+      <div class="gallery-cinematic-break" id="cinematic-break">
+        <div class="cinematic-canvas">
+          <div class="cinematic-bg-parallax" style="background-image: url('assets/images/cinematic-break.jpg');"></div>
+          <div class="cinematic-veil"></div>
+          <div class="cinematic-quote-wrap scroll-reveal">
+            <p class="cinematic-words" data-live-write>
+              And somehow,<br>
+              <em>it became everything.</em>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Soft Page Transition Accent 3 (Gallery to Guestbook) -->
+    <div class="scene-transition-accent" aria-hidden="true">
+      <svg class="accent-stroke-svg" width="56" height="6" viewBox="0 0 56 6" fill="none">
+        <path class="accent-path-burgundy" d="M 2 3 C 18 1.5, 38 4.5, 54 2.8" stroke="#4E1318" stroke-width="1" stroke-linecap="round"/>
+        <circle class="accent-dot-gold" cx="28" cy="3" r="1.1" fill="#C5A880"/>
+      </svg>
+    </div>
+
+    <!-- 7 & 8. INTIMATE STATIONERY GUESTBOOK & WISHES FEED -->
+    <section class="stationery-guestbook">
+      <div class="guestbook-note scroll-reveal">
+        <p class="note-intro">
+          A little note from you<br>
+          would mean the world to us.
+          <span class="guestbook-red-mark" aria-hidden="true">♡</span>
+        </p>
+
+        <form id="guestbook-form" class="note-form" autocomplete="off">
+          <div class="note-row">
+            <label for="guest-name" class="note-label">NAME</label>
+            <input type="text" id="guest-name" class="note-underline-input" required maxlength="60"
+              placeholder="Your name...">
+          </div>
+
+          <div class="note-row message-row">
+            <label for="guest-message" class="note-label">MESSAGE</label>
+            <textarea id="guest-message" class="note-ruled-textarea" rows="2" required maxlength="300"
+              placeholder="Write your heartfelt wish..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-note-submit">
+            <span>LEAVE A WISH ♡</span>
+          </button>
+        </form>
+
+        <div id="wish-success-toast" class="wish-toast is-hidden" aria-live="polite">
+          Thank you for your beautiful wish.
+        </div>
+
+        <!-- Dedicated compact scrollable wishes container (320-420px height) -->
+        <div class="wishes-scroll-container">
+          <div class="wishes-scroll-box" id="wishes-scroll-box">
+            <div class="wishes-list" id="wishes-list">
+              <div class="wish-entry">
+                <div class="wish-meta">
+                  <span class="wish-name">Ahmed</span>
+                  <span class="wish-time">02 Oct 2026</span>
+                </div>
+                <p class="wish-text">Wishing you both a lifetime of happiness ♡</p>
+              </div>
+
+              <div class="wish-rule"></div>
+
+              <div class="wish-entry">
+                <div class="wish-meta">
+                  <span class="wish-name">Mariam</span>
+                  <span class="wish-time">03 Oct 2026</span>
+                </div>
+                <p class="wish-text">Can’t wait to celebrate with you!</p>
+              </div>
+
+              <div class="wish-rule"></div>
+
+              <div class="wish-entry">
+                <div class="wish-meta">
+                  <span class="wish-name">Omar</span>
+                  <span class="wish-time">05 Oct 2026</span>
+                </div>
+                <p class="wish-text">May every chapter be better than the last.</p>
+              </div>
+            </div>
+          </div>
+          <div class="wishes-scroll-hint" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. UPGRADED "SEE YOU THERE" CLOSING MOMENT -->
+    <section class="closing-journey" id="closing-moment">
+      <!-- Faint oversized background typography: 11 · 10 · 2026 -->
+      <div class="closing-watermark-date" aria-hidden="true">11 · 10 · 2026</div>
+
+      <div class="closing-wrap scroll-reveal">
+        <div class="closing-composition">
+          <!-- Step 1: SEE YOU THERE -->
+          <p class="closing-step-tag">SEE YOU THERE</p>
+
+          <!-- Step 2: Date -->
+          <p class="closing-step-date">11 · 10 · 2026</p>
+
+          <!-- Step 3: Couple Names -->
+          <div class="closing-step-names">
+            <span class="closing-name">Makarious</span>
+            <span class="closing-amp">&amp;</span>
+            <span class="closing-name">Sarah</span>
+          </div>
+
+          <!-- Step 4: Burgundy hairline / ink stroke as final visual punctuation -->
+          <div class="closing-burgundy-punctuation" aria-hidden="true">
+            <svg width="48" height="6" viewBox="0 0 48 6" fill="none">
+              <path d="M 2 3.2 C 14 1.8, 32 4.2, 46 2.6" stroke="#4E1318" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <!-- Step 5: Final revealed whisper -->
+          <p class="closing-step-whisper">
+            Until then,<br>
+            <em>save us a little dance.</em>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
