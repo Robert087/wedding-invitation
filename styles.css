@@ -60,7 +60,7 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--color-ivory);
-  background-image: url('assets/images/paper-texture.svg');
+  background-image: url('./assets/images/paper-texture.svg');
   background-repeat: repeat;
   line-height: 1.55;
   overflow-x: hidden;
@@ -230,7 +230,7 @@ button, input, textarea {
 .cover-paper-backdrop {
   position: absolute;
   inset: 0;
-  background-image: url('assets/images/paper-texture.svg');
+  background-image: url('./assets/images/paper-texture.svg');
   background-repeat: repeat;
   background-size: 180px 180px;
   opacity: 0.35;
@@ -243,7 +243,7 @@ button, input, textarea {
   z-index: 2;
   width: min(100%, 390px);
   background-color: #FAF8F5;
-  background-image: url('assets/images/paper-texture.svg');
+  background-image: url('./assets/images/paper-texture.svg');
   background-repeat: repeat;
   background-size: 160px 160px;
   border: 1px solid rgba(197, 168, 128, 0.28);
@@ -539,7 +539,7 @@ body.is-revealing-suite .invitation-container,
   position: relative;
   width: 100%;
   max-width: 410px;
-  background: transparent url('assets/images/reference-suite-base.jpg') center top / 100% 100% no-repeat;
+  background: transparent url('./assets/images/reference-suite-base.jpg') center top / 100% 100% no-repeat;
   border: none;
   padding: 22px 16px 14px;
   box-shadow: none;
@@ -1047,7 +1047,7 @@ body.is-revealing-suite .suite-floral-br,
   border-bottom: 1px solid rgba(197, 168, 128, 0.18);
   background:
     radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.88), rgba(244, 239, 234, 0.65) 44%, rgba(230, 223, 213, 0.45) 100%),
-    url('assets/images/paper-texture.svg');
+    url('./assets/images/paper-texture.svg');
 }
 
 .countdown-watermark {
@@ -1277,7 +1277,7 @@ body.is-revealing-suite .suite-floral-br,
   /* Subtle warm beige / dusty rose wash over delicate paper texture */
   background:
     radial-gradient(ellipse at 50% 50%, rgba(247, 239, 235, 0.85) 0%, rgba(244, 236, 230, 0.55) 55%, rgba(240, 232, 224, 0) 100%),
-    url('assets/images/paper-texture.svg');
+    url('./assets/images/paper-texture.svg');
   border-top: 1px solid rgba(197, 168, 128, 0.18);
   border-bottom: 1px solid rgba(197, 168, 128, 0.18);
 }
@@ -1414,7 +1414,7 @@ body.is-revealing-suite .suite-floral-br,
   text-align: center;
   background:
     radial-gradient(ellipse at 50% 50%, rgba(201, 143, 135, 0.11) 0%, rgba(201, 143, 135, 0.035) 55%, transparent 78%),
-    url('assets/images/paper-texture.svg');
+    url('./assets/images/paper-texture.svg');
   border-top: 1px solid rgba(201, 143, 135, 0.18);
   border-bottom: 1px solid rgba(201, 143, 135, 0.18);
 }
@@ -1639,7 +1639,7 @@ body.is-revealing-suite .suite-floral-br,
   background-color: var(--color-dusty-rose-soft);
   background-image:
     radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.65) 0%, rgba(201, 143, 135, 0.09) 65%, rgba(201, 143, 135, 0.14) 100%),
-    url('assets/images/paper-texture.svg');
+    url('./assets/images/paper-texture.svg');
   border-top: 1px solid var(--color-dusty-rose-border);
   border-bottom: 1px solid var(--color-dusty-rose-border);
 }
