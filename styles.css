@@ -536,25 +536,35 @@ body.is-locked .invitation-container {
   background: linear-gradient(180deg, rgba(244, 239, 234, 0.22), transparent 78%);
 }
 
-.suite-wrapper::before {
-  content: "M & S";
+.suite-wrapper::before,
+.suite-wrapper::after {
+  content: "";
   position: absolute;
-  top: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-display);
-  font-size: clamp(4.8rem, 22vw, 8rem);
-  letter-spacing: 0.12em;
-  color: rgba(197, 168, 128, 0.035);
-  white-space: nowrap;
+  z-index: 1;
+  width: 150px;
+  height: 260px;
+  background: url('assets/images/signature-rose-cutout.png') top left / contain no-repeat;
+  filter: sepia(0.28) saturate(0.68) brightness(1.12);
+  opacity: 0.62;
   pointer-events: none;
+}
+
+.suite-wrapper::before {
+  top: -18px;
+  left: -18px;
+}
+
+.suite-wrapper::after {
+  right: -18px;
+  bottom: 6px;
+  transform: rotate(180deg);
 }
 
 .suite-embossed {
   position: relative;
   width: 100%;
   max-width: 430px;
-  min-height: 620px;
+  min-height: 760px;
   text-align: center;
   overflow: hidden;
   border: 1px solid rgba(78, 19, 24, 0.32);
@@ -576,21 +586,6 @@ body.is-locked .invitation-container {
   z-index: 2;
 }
 
-.suite-embossed::after {
-  content: "";
-  position: absolute;
-  inset: -26px auto auto -30px;
-  width: 150px;
-  height: 220px;
-  opacity: 0.72;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 34% 22%, transparent 0 18px, rgba(78, 19, 24, 0.22) 19px 21px, transparent 22px),
-    radial-gradient(ellipse at 18% 51%, transparent 0 23px, rgba(78, 19, 24, 0.16) 24px 26px, transparent 27px),
-    linear-gradient(123deg, transparent 47%, rgba(78, 19, 24, 0.3) 48% 49%, transparent 50%),
-    linear-gradient(154deg, transparent 54%, rgba(78, 19, 24, 0.18) 55% 56%, transparent 57%);
-  transform: rotate(-8deg);
-}
 
 .suite-embossed > * {
   position: relative;
@@ -722,15 +717,35 @@ body.is-locked .invitation-container {
 }
 
 .suite-calendar-date {
-  font-family: var(--font-serif);
-  font-size: 1.42rem;
-  letter-spacing: 0.22em;
-  color: var(--color-gold-muted);
-  font-weight: 400;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 1px;
+  font-weight: 400;
+}
+
+.calendar-day-number {
+  font-family: var(--font-serif);
+  font-size: clamp(3.7rem, 16vw, 5rem);
+  line-height: 0.86;
+  color: var(--color-oxblood);
+}
+
+.calendar-month {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.34em;
+  line-height: 1.35;
+  color: var(--color-gold-muted);
+}
+
+.calendar-year {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.42em;
+  line-height: 1.4;
+  color: var(--color-deep-black);
 }
 
 .ceremony-direct {
@@ -742,30 +757,30 @@ body.is-locked .invitation-container {
 
 .ceremony-time {
   font-family: var(--font-serif);
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: 300;
   letter-spacing: 0.12em;
   color: var(--color-gold-muted);
-  margin-bottom: 4px;
+  margin-bottom: 20px;
 }
 
 .venue-name {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-deep-black);
-  margin-bottom: 2px;
+  margin-bottom: 7px;
 }
 
 .venue-location {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
+  font-size: 0.68rem;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  margin-bottom: 14px;
+  margin-bottom: 28px;
 }
 
 .btn-location-inline {
@@ -797,8 +812,8 @@ body.is-locked .invitation-container {
   }
 
   .suite-embossed {
-    min-height: 570px;
-    padding: 40px 18px 30px;
+    min-height: 760px;
+    padding: 48px 18px 38px;
   }
 
   .suite-names {
