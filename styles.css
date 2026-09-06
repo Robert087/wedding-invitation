@@ -506,13 +506,14 @@ body.is-revealing-suite .suite-wrapper {
    ========================================================================== */
 .invitation-container {
   width: 100%;
-  min-height: 100vh;
   position: relative;
   z-index: 10;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.7s var(--ease-luxury), visibility 0.7s var(--ease-luxury);
+  transform: translateY(16px);
+  transition: opacity 0.85s var(--ease-luxury), transform 0.85s var(--ease-luxury), visibility 0.85s var(--ease-luxury);
+  will-change: opacity, transform;
 }
 
 body.is-revealing-suite .invitation-container,
@@ -520,28 +521,165 @@ body.is-revealing-suite .invitation-container,
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 .suite-wrapper {
-  padding: 16px 14px 16px;
+  padding: 8px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  z-index: 10;
+  overflow: visible;
+  width: 100%;
 }
 
 .suite-embossed {
   position: relative;
   width: 100%;
-  max-width: 420px;
-  background: #FAF7F2 url('assets/images/reference-suite-bg.jpg') center / 100% 100% no-repeat;
+  max-width: 410px;
+  background: transparent url('assets/images/reference-suite-base.jpg') center top / 100% 100% no-repeat;
   border: none;
-  padding: 34px 20px 28px;
-  box-shadow: 0 10px 35px -12px rgba(78, 19, 24, 0.06), 0 2px 10px -4px rgba(0, 0, 0, 0.03);
+  padding: 22px 16px 14px;
+  box-shadow: none;
   border-radius: 0;
-  overflow: hidden;
+  overflow: visible;
   text-align: center;
+}
+
+/* ==========================================================================
+   LIVING FLORAL CORNER ACCENTS (BOTANICAL BLOOMING REVEAL)
+   ========================================================================== */
+.suite-floral-corner {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  will-change: clip-path, opacity, transform;
+}
+
+.suite-floral-tl {
+  top: 0;
+  left: 0;
+  width: 37.97%;
+  height: 35.16%;
+  transform-origin: top left;
+}
+
+.suite-floral-br {
+  bottom: 0;
+  right: 0;
+  width: 22.15%;
+  height: 43.95%;
+  transform-origin: bottom right;
+}
+
+.suite-floral-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.suite-floral-tl .suite-floral-img {
+  object-fit: contain;
+  object-position: top left;
+}
+
+.suite-floral-br .suite-floral-img {
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* Botanical Growth / Bloom Reveal Animation (Slowed & Elegant: 1650ms) */
+body.is-revealing-suite .suite-floral-tl,
+.invitation-container.is-revealed .suite-floral-tl {
+  animation: floralBloomTL 1650ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
+}
+
+body.is-revealing-suite .suite-floral-br,
+.invitation-container.is-revealed .suite-floral-br {
+  animation: floralBloomBR 1650ms cubic-bezier(0.22, 1, 0.36, 1) 360ms forwards;
+}
+
+/* TOP-LEFT FLORAL: Growing from upper-left inward & downward (stem first -> branches -> petals -> full bloom) */
+@keyframes floralBloomTL {
+  0% {
+    opacity: 0;
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    transform: scale(0.95) translate(-3px, -3px);
+  }
+  20% {
+    opacity: 0.55;
+    /* Primary root stem arches inward from corner */
+    clip-path: polygon(0 0, 36% 0, 16% 32%, 0 24%);
+    transform: scale(0.965) translate(-2px, -2px);
+  }
+  50% {
+    opacity: 0.85;
+    /* Branching stems reach outward, flower buds start to emerge */
+    clip-path: polygon(0 0, 72% 0, 56% 56%, 16% 62%, 0 46%);
+    transform: scale(0.98) translate(-1px, -1px);
+  }
+  78% {
+    opacity: 0.96;
+    /* Main blossom body opens petals and lower stem stretches down */
+    clip-path: polygon(0 0, 96% 0, 88% 74%, 48% 92%, 0 84%);
+    transform: scale(0.995) translate(-0.3px, -0.3px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+/* BOTTOM-RIGHT FLORAL: Growing from lower-right inward & upward (stem first -> branches -> petals -> full bloom) */
+@keyframes floralBloomBR {
+  0% {
+    opacity: 0;
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
+    transform: scale(0.95) translate(3px, 3px);
+  }
+  20% {
+    opacity: 0.55;
+    /* Base stem begins rising from lower-right edge */
+    clip-path: polygon(68% 100%, 100% 72%, 100% 100%, 75% 100%);
+    transform: scale(0.965) translate(2px, 2px);
+  }
+  50% {
+    opacity: 0.85;
+    /* Lower branches sprout, main stem rises into central blossom area */
+    clip-path: polygon(25% 100%, 8% 68%, 42% 44%, 100% 44%, 100% 100%);
+    transform: scale(0.98) translate(1px, 1px);
+  }
+  78% {
+    opacity: 0.96;
+    /* Large blush petals unfurl, upper delicate buds shoot toward top */
+    clip-path: polygon(0 100%, 0 38%, 32% 14%, 100% 8%, 100% 100%);
+    transform: scale(0.995) translate(0.3px, 0.3px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+@keyframes floralFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.is-revealing-suite .suite-floral-tl,
+  .invitation-container.is-revealed .suite-floral-tl,
+  body.is-revealing-suite .suite-floral-br,
+  .invitation-container.is-revealed .suite-floral-br {
+    animation: floralFadeIn 0.8s ease forwards !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
 }
 
 .suite-inner-content {
@@ -558,7 +696,7 @@ body.is-revealing-suite .invitation-container,
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .ref-mono-letters {
@@ -571,7 +709,7 @@ body.is-revealing-suite .invitation-container,
 
 .ref-mono-m {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   font-weight: 500;
   color: #4E1318;
   margin-right: -4px;
@@ -579,7 +717,7 @@ body.is-revealing-suite .invitation-container,
 
 .ref-mono-amp {
   font-family: var(--font-script);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   color: #B8976C;
   position: relative;
   z-index: 1;
@@ -587,14 +725,14 @@ body.is-revealing-suite .invitation-container,
 
 .ref-mono-s {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   font-weight: 500;
   color: #4E1318;
   margin-left: -4px;
 }
 
 .ref-mono-sprig {
-  margin-top: 3px;
+  margin-top: 2px;
   opacity: 0.85;
 }
 
@@ -606,7 +744,7 @@ body.is-revealing-suite .invitation-container,
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #6D6761;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 /* Large centered couple names */
@@ -614,14 +752,14 @@ body.is-revealing-suite .invitation-container,
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: 1.08;
-  margin-bottom: 12px;
+  line-height: 1.06;
+  margin-bottom: 6px;
 }
 
 .ref-name-first,
 .ref-name-last {
   font-family: var(--font-serif);
-  font-size: clamp(1.8rem, 7.2vw, 2.2rem);
+  font-size: clamp(1.75rem, 6.8vw, 2.05rem);
   font-weight: 400;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -630,15 +768,15 @@ body.is-revealing-suite .invitation-container,
 
 .ref-name-amp {
   font-family: var(--font-script);
-  font-size: 1.42rem;
+  font-size: 1.35rem;
   color: #B8976C;
   line-height: 1;
-  margin: 1px 0 3px;
+  margin: 0;
 }
 
 .ref-name-bride {
   font-family: var(--font-serif);
-  font-size: clamp(1.68rem, 6.8vw, 2.05rem);
+  font-size: clamp(1.62rem, 6.4vw, 1.95rem);
   font-weight: 400;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -648,12 +786,12 @@ body.is-revealing-suite .invitation-container,
 /* Italic Personal Message */
 .ref-suite-phrase {
   font-family: var(--font-serif);
-  font-size: 0.98rem;
+  font-size: 0.94rem;
   font-style: italic;
   font-weight: 300;
-  line-height: 1.38;
+  line-height: 1.32;
   color: #4A4540;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 /* Decorative Divider with Burgundy Sprig */
@@ -661,10 +799,10 @@ body.is-revealing-suite .invitation-container,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  max-width: 160px;
-  margin: 0 auto 10px;
+  max-width: 150px;
+  margin: 0 auto 6px;
 }
 
 .ref-divider-line {
@@ -688,101 +826,136 @@ body.is-revealing-suite .invitation-container,
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .ref-date-day {
   font-family: var(--font-sans);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #2C2724;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .ref-date-number {
   font-family: var(--font-serif);
-  font-size: 2.75rem;
+  font-size: 2.35rem;
   font-weight: 400;
   line-height: 0.95;
   color: #4E1318;
-  margin: 1px 0 2px;
+  margin: 0 0 1px;
 }
 
 .ref-date-month {
   font-family: var(--font-display);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.38em;
+  letter-spacing: 0.36em;
   text-transform: uppercase;
   color: #B8976C;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .ref-date-year {
   font-family: var(--font-serif);
-  font-size: 0.78rem;
-  letter-spacing: 0.32em;
+  font-size: 0.74rem;
+  letter-spacing: 0.3em;
   color: #2C2724;
 }
 
-/* Time Block */
-.ref-time-block {
+/* Two-Moment Composition (Church & Hotel) */
+.ref-moments-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 330px;
+  margin: 8px auto 10px;
+  gap: 10px;
+}
+
+.ref-moment-col {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  text-align: center;
+  min-width: 0;
 }
 
-.ref-time-text {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  color: #B8976C;
-  line-height: 1;
-  margin-bottom: 5px;
+.ref-moment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  height: 24px;
 }
 
-.ref-time-dash {
+.ref-moment-icon svg {
+  display: block;
+  overflow: visible;
   width: 24px;
-  height: 1px;
-  background-color: #C5A880;
-  opacity: 0.65;
+  height: 24px;
 }
 
-/* Venue Block */
-.ref-venue-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 12px;
+.ref-moment-time {
+  font-family: var(--font-serif);
+  font-size: clamp(1.22rem, 5vw, 1.34rem);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+  letter-spacing: 0.08em;
+  color: #B8976C;
+  line-height: 1.1;
+  margin: 0 0 3px;
 }
 
-.ref-venue-title {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
+.ref-moment-venue {
+  font-family: var(--font-sans);
+  font-size: clamp(0.6rem, 2.5vw, 0.67rem);
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: clamp(0.13em, 1.7vw, 0.18em);
   text-transform: uppercase;
   color: #1A1816;
-  margin-bottom: 4px;
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
 }
 
-.ref-venue-city {
-  font-family: var(--font-sans);
-  font-size: 0.62rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: #6D6761;
+/* Vertical Hairline Divider with Burgundy Diamond Accent */
+.ref-moments-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  width: 8px;
+  flex-shrink: 0;
+}
+
+.ref-moments-line {
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(197, 168, 128, 0.65) 25%, rgba(197, 168, 128, 0.65) 75%, transparent);
+}
+
+.ref-moments-diamond {
+  width: 4.5px;
+  height: 4.5px;
+  background-color: #4E1318;
+  transform: rotate(45deg);
+  margin: 2px 0;
+  flex-shrink: 0;
+  box-shadow: 0 0 1px rgba(78, 19, 24, 0.35);
 }
 
 /* Location Action Link */
 .ref-location-wrap {
   display: flex;
   justify-content: center;
+  margin-top: 2px;
 }
 
 .ref-location-action {
@@ -794,15 +967,69 @@ body.is-revealing-suite .invitation-container,
   text-transform: uppercase;
   text-decoration: none;
   color: #4E1318;
-  border-bottom: 1px solid rgba(78, 19, 24, 0.45);
-  padding-bottom: 2px;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  border-bottom: 1px solid rgba(78, 19, 24, 0.65);
+  padding-bottom: 1px;
+  transition: color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
 }
 
 .ref-location-action:hover,
 .ref-location-action:focus-visible {
-  color: #1A1816;
-  border-color: #1A1816;
+  color: #721C24;
+  border-bottom-color: #721C24;
+}
+
+/* Subtle Continuation Cue (Scroll Indicator) */
+.suite-scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  opacity: 0.38;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  animation: cueDrift 2.5s ease-in-out infinite;
+}
+
+.suite-scroll-cue.is-scrolled {
+  opacity: 0 !important;
+  transform: translateY(6px) !important;
+}
+
+.suite-scroll-cue-text {
+  font-family: var(--font-sans);
+  font-size: 0.52rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #6D6761;
+}
+
+.suite-scroll-cue-arrow {
+  font-family: var(--font-sans);
+  font-size: 0.64rem;
+  line-height: 1;
+  color: #6D6761;
+  display: inline-block;
+}
+
+@keyframes cueDrift {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* Seam Transition Accent between Suite and Countdown */
+.suite-transition-accent {
+  position: relative;
+  z-index: 12;
+  margin-top: -4px;
+  margin-bottom: -6px;
+  padding: 6px 0;
 }
 
 /* ==========================================================================
@@ -810,9 +1037,10 @@ body.is-revealing-suite .invitation-container,
    ========================================================================== */
 .countdown-moment {
   position: relative;
+  z-index: 5;
   width: 100%;
   overflow: hidden;
-  padding: 40px 18px 46px;
+  padding: 26px 18px 40px;
   display: flex;
   justify-content: center;
   border-top: 1px solid rgba(197, 168, 128, 0.18);
@@ -991,12 +1219,14 @@ body.is-revealing-suite .invitation-container,
   stroke-dashoffset: 140;
 }
 
-.countdown-composition.is-visible .cal-mark path {
-  animation: drawCalendarMark 1.25s var(--ease-luxury) 0.45s forwards;
+.cal-stationery.is-visible .cal-mark path,
+.cal-stationery.is-animated .cal-mark path {
+  animation: drawCalendarMark 1.25s var(--ease-luxury) 0.15s forwards;
 }
 
-.countdown-composition.is-visible .cal-mark path:nth-child(2) {
-  animation-delay: 0.9s;
+.cal-stationery.is-visible .cal-mark path:nth-child(2),
+.cal-stationery.is-animated .cal-mark path:nth-child(2) {
+  animation-delay: 0.65s;
 }
 
 @keyframes drawCalendarMark {
@@ -1033,41 +1263,136 @@ body.is-revealing-suite .invitation-container,
 }
 
 /* ==========================================================================
-   3. TRANSPARENT DETAIL: BESPOKE HANDWRITTEN SIGNATURE ELEMENT
+   COMPACT VENUE EMPHASIS: HATHOR HOTEL CELEBRATION
    ========================================================================== */
-.transparent-detail-wrap {
+.hathor-celebration-moment {
+  position: relative;
+  width: 100%;
+  padding: 38px 20px 42px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: -10px auto 26px;
-  padding: 0 20px;
-  pointer-events: none;
+  text-align: center;
+  overflow: hidden;
+  /* Subtle warm beige / dusty rose wash over delicate paper texture */
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(247, 239, 235, 0.85) 0%, rgba(244, 236, 230, 0.55) 55%, rgba(240, 232, 224, 0) 100%),
+    url('assets/images/paper-texture.svg');
+  border-top: 1px solid rgba(197, 168, 128, 0.18);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.18);
 }
 
-.transparent-detail-wrap.is-visible .handwritten-signature-img {
-  animation: signatureFloatIn 1.3s var(--ease-luxury) both;
+.hathor-inner-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.handwritten-signature-img {
-  width: 230px;
-  max-width: 78%;
-  height: auto;
-  transform: rotate(-2.5deg);
-  opacity: 0.85;
-  filter: drop-shadow(0 2px 4px rgba(197, 168, 128, 0.12));
+/* Whisper Lead-in */
+.hathor-whisper {
+  font-family: var(--font-sans);
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8C7D73;
+  margin: 0 0 10px;
+  line-height: 1.2;
 }
 
-@keyframes signatureFloatIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px) rotate(-2.5deg);
-    filter: blur(4px) drop-shadow(0 2px 4px rgba(197, 168, 128, 0.12));
-  }
-  to {
-    opacity: 0.85;
-    transform: translateY(0) rotate(-2.5deg);
-    filter: blur(0) drop-shadow(0 2px 4px rgba(197, 168, 128, 0.12));
-  }
+/* Small Deep Burgundy Accent (#4E1318) */
+.hathor-burgundy-accent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 110px;
+  margin: 0 auto 13px;
+}
+
+.hathor-accent-hairline {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(78, 19, 24, 0.45) 50%, transparent);
+}
+
+.hathor-accent-gem {
+  width: 4.5px;
+  height: 4.5px;
+  background-color: #4E1318;
+  transform: rotate(45deg);
+  box-shadow: 0 0 1px rgba(78, 19, 24, 0.35);
+  flex-shrink: 0;
+}
+
+/* Strong Elegant Serif Treatment for HATHOR HOTEL */
+.hathor-venue-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 6.8vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1A1816;
+  line-height: 1.1;
+  margin: 0 0 6px;
+}
+
+/* 10:00 PM in Muted Warm Gold Serif with Lining Figures */
+.hathor-venue-time {
+  font-family: var(--font-serif);
+  font-size: 1.26rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+  color: #B8976C;
+  line-height: 1.2;
+  margin: 0 0 3px;
+}
+
+/* QENA, EGYPT */
+.hathor-venue-city {
+  font-family: var(--font-sans);
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #6D6761;
+  margin: 0 0 16px;
+}
+
+/* Action Link Container */
+.hathor-action-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* TAKE ME THERE ↗: Text-Only Action */
+.hathor-action-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #4E1318;
+  border-bottom: 1px solid rgba(78, 19, 24, 0.6);
+  padding-bottom: 2px;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.hathor-action-link:hover,
+.hathor-action-link:focus-visible {
+  color: #721C24;
+  border-bottom-color: #721C24;
+  transform: translateY(-1px);
 }
 
 /* ==========================================================================
@@ -1347,7 +1672,7 @@ body.is-revealing-suite .invitation-container,
   flex-direction: column;
   gap: 18px;
   text-align: left;
-  margin-bottom: 28px;
+  margin-bottom: 0;
 }
 
 .note-row {
@@ -1428,6 +1753,30 @@ body.is-revealing-suite .invitation-container,
   color: #FFFFFF;
 }
 
+.btn-note-submit:disabled,
+.btn-note-submit:disabled:hover {
+  opacity: 0.55;
+  cursor: wait;
+  pointer-events: none;
+  background: var(--color-deep-black);
+  border-color: var(--color-deep-black);
+  color: var(--color-warm-offwhite);
+}
+
+.guestbook-status {
+  margin: 8px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--color-dusty-rose-muted);
+  text-align: center;
+}
+
+.guestbook-status.is-hidden {
+  display: none;
+}
+
 .wish-toast {
   position: absolute;
   top: 16px;
@@ -1454,8 +1803,33 @@ body.is-revealing-suite .invitation-container,
 .wishes-scroll-container {
   position: relative;
   width: 100%;
-  margin-top: 6px;
+  margin-top: 24px;
   text-align: left;
+  animation: wishesReveal 0.5s var(--ease-luxury) forwards;
+}
+
+.wishes-scroll-container.is-hidden {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+@keyframes wishesReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .wishes-scroll-box {

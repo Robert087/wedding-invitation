@@ -21,7 +21,27 @@ document.addEventListener('DOMContentLoaded', () => {
   let webAudioTimer = null;
   let invitationOpened = !body.classList.contains('is-locked');
 
-  // Resilient Web Audio Synthesizer fallback
+  // Scroll Alignment Controller: Guarantees opening from the true top without jump or mid-section start
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  function resetScrollToTop() {
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    const invMain = document.getElementById('invitation-main');
+    if (invMain) invMain.scrollTop = 0;
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      document.documentElement.style.scrollBehavior = '';
+    });
+  }
+
+  resetScrollToTop();
   function startWebAudioFallback() {
     if (webAudioCtx) return;
     try {
@@ -222,10 +242,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnOpen) {
     const handleOpen = () => {
       if (coverSection.classList.contains('is-opening') || coverSection.classList.contains('is-opened')) return;
+      if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
+      resetScrollToTop();
       coverSection.classList.add('is-opening');
       playAudio();
 
       if (prefersReducedMotion) {
+        resetScrollToTop();
         coverSection.classList.add('is-opened');
         body.classList.remove('is-locked');
         body.classList.add('is-revealing-suite');
@@ -233,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (invMain) invMain.classList.add('is-revealed');
         invitationOpened = true;
         audioToggle.classList.remove('is-hidden');
+        resetScrollToTop();
         triggerScrollReveals();
         triggerLiveWritingInView();
         return;
@@ -244,11 +270,13 @@ document.addEventListener('DOMContentLoaded', () => {
         audioToggle.classList.remove('is-hidden');
 
         playPersonalNoteSequence(() => {
+          resetScrollToTop();
           body.classList.remove('is-locked');
           body.classList.add('is-revealing-suite');
           const invMain = document.getElementById('invitation-main');
           if (invMain) invMain.classList.add('is-revealed');
           invitationOpened = true;
+          resetScrollToTop();
           triggerScrollReveals();
           triggerLiveWritingInView();
         });
@@ -390,6 +418,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Calendar Day 11 Circle Draw: Triggers only when roughly 40–60% of the calendar is visible, runs once only
+  const calStationery = document.querySelector('.cal-stationery');
+  if (calStationery) {
+    if (prefersReducedMotion) {
+      calStationery.classList.add('is-visible', 'is-animated');
+    } else {
+      const calendarObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!invitationOpened) return;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            calStationery.classList.add('is-visible', 'is-animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: '0px 0px -8% 0px',
+        threshold: [0.5, 0.6]
+      });
+
+      calendarObserver.observe(calStationery);
+    }
+  }
+
   // ==========================================================================
   // 3. LIVE COUNTDOWN — 11 OCTOBER 2026, 7:00 PM, CAIRO (UTC+3)
   // ==========================================================================
@@ -508,8 +559,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Scroll listener
+  const scrollCue = document.getElementById('suite-scroll-cue');
   let ticking = false;
   window.addEventListener('scroll', () => {
+    if (scrollCue && window.scrollY > 15) {
+      scrollCue.classList.add('is-scrolled');
+    }
     if (!ticking) {
       window.requestAnimationFrame(() => {
         handleChildhoodTransformation();
@@ -627,33 +682,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const guestbookForm = document.getElementById('guestbook-form');
   const guestNameInput = document.getElementById('guest-name');
   const guestMessageInput = document.getElementById('guest-message');
+  const guestbookSubmit = document.getElementById('guestbook-submit');
+  const guestbookFormError = document.getElementById('guestbook-form-error');
+  const guestbookLoadError = document.getElementById('guestbook-load-error');
   const wishToast = document.getElementById('wish-success-toast');
+  const wishesContainer = document.getElementById('wishes-container') || document.querySelector('.wishes-scroll-container');
   const wishesScrollBox = document.getElementById('wishes-scroll-box');
   const wishesList = document.getElementById('wishes-list');
 
-  const STORAGE_KEY = 'makarious_sarah_wishes_v3';
-
-  function loadStoredWishes() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return [];
-      return JSON.parse(raw);
-    } catch (e) {
-      return [];
+  function updateWishesVisibility(hasWishes) {
+    if (!wishesContainer) return;
+    if (hasWishes) {
+      wishesContainer.classList.remove('is-hidden');
+    } else {
+      wishesContainer.classList.add('is-hidden');
     }
   }
 
-  function saveStoredWish(name, message, dateStr) {
-    try {
-      const current = loadStoredWishes();
-      current.unshift({ name, message, date: dateStr });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
-    } catch (e) {
-      console.warn('Could not save to localStorage', e);
+  const SUPABASE_URL = 'https://aguvswjvkhbxpdzjyovo.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFndXZzd2p2a2hieHBkemp5b3ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NDM4MDMsImV4cCI6MjEwNDIxOTgwM30.RsFENQjlq_7iU0d1pb_E6QNMEn51yT-VOnGANGMYFEI';
+  const GUESTBOOK_ENDPOINT = `${SUPABASE_URL}/rest/v1/guestbook`;
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  let isSubmittingWish = false;
+
+  function supabaseHeaders(extra) {
+    return Object.assign({
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json'
+    }, extra || {});
+  }
+
+  function formatWishDate(iso) {
+    const date = iso ? new Date(iso) : new Date();
+    if (Number.isNaN(date.getTime())) return '';
+    return `${String(date.getDate()).padStart(2, '0')} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+  }
+
+  function setStatus(el, message) {
+    if (!el) return;
+    if (message) {
+      el.textContent = message;
+      el.classList.remove('is-hidden');
+    } else {
+      el.textContent = '';
+      el.classList.add('is-hidden');
     }
   }
 
-  function appendWishToDOM(name, message, dateStr) {
+  function createWishEntry(name, message, dateStr) {
     const wishEntry = document.createElement('div');
     wishEntry.className = 'wish-entry';
 
@@ -677,11 +755,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     wishEntry.appendChild(wishMeta);
     wishEntry.appendChild(textP);
+    return wishEntry;
+  }
 
+  function createWishRule() {
     const rule = document.createElement('div');
     rule.className = 'wish-rule';
+    return rule;
+  }
+
+  function prependWishToDOM(name, message, dateStr) {
+    if (!wishesList) return;
+    updateWishesVisibility(true);
+    const wishEntry = createWishEntry(name, message, dateStr);
 
     if (wishesList.firstChild) {
+      const rule = createWishRule();
       wishesList.insertBefore(rule, wishesList.firstChild);
       wishesList.insertBefore(wishEntry, rule);
     } else {
@@ -689,41 +778,92 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function renderStoredWishes() {
-    const stored = loadStoredWishes();
-    stored.forEach((item) => {
-      appendWishToDOM(item.name, item.message, item.date);
+  function renderWishes(rows) {
+    if (!wishesList) return;
+    wishesList.replaceChildren();
+
+    const validRows = Array.isArray(rows) ? rows.filter(r => r && (r.wish || r.name)) : [];
+
+    if (validRows.length === 0) {
+      updateWishesVisibility(false);
+      return;
+    }
+
+    validRows.forEach((row, index) => {
+      if (index > 0) wishesList.appendChild(createWishRule());
+      wishesList.appendChild(createWishEntry(row.name, row.wish, formatWishDate(row.created_at)));
     });
+
+    updateWishesVisibility(true);
+  }
+
+  async function loadGuestbookWishes() {
+    setStatus(guestbookLoadError, '');
+    try {
+      const response = await fetch(
+        `${GUESTBOOK_ENDPOINT}?select=id,name,wish,created_at&order=created_at.desc`,
+        { headers: supabaseHeaders() }
+      );
+      if (!response.ok) throw new Error('load failed');
+      const rows = await response.json();
+      renderWishes(Array.isArray(rows) ? rows : []);
+    } catch (e) {
+      updateWishesVisibility(false);
+      setStatus(guestbookLoadError, 'We couldn’t load the wishes just now. Please try again in a moment.');
+    }
   }
 
   if (guestbookForm) {
-    guestbookForm.addEventListener('submit', (e) => {
+    guestbookForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (isSubmittingWish) return;
 
       const name = guestNameInput.value.trim();
       const message = guestMessageInput.value.trim();
 
       if (!name || !message) return;
 
-      const now = new Date();
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const dateFormatted = `${String(now.getDate()).padStart(2, '0')} ${months[now.getMonth()]} ${now.getFullYear()}`;
+      isSubmittingWish = true;
+      if (guestbookSubmit) guestbookSubmit.disabled = true;
+      setStatus(guestbookFormError, '');
 
-      appendWishToDOM(name, message, dateFormatted);
-      saveStoredWish(name, message, dateFormatted);
+      try {
+        const response = await fetch(GUESTBOOK_ENDPOINT, {
+          method: 'POST',
+          headers: supabaseHeaders({ Prefer: 'return=representation' }),
+          body: JSON.stringify({ name, wish: message })
+        });
 
-      guestbookForm.reset();
+        if (!response.ok) throw new Error('insert failed');
+        const inserted = await response.json();
+        const row = Array.isArray(inserted) ? inserted[0] : inserted;
 
-      if (wishesScrollBox) {
-        wishesScrollBox.scrollTo({ top: 0, behavior: 'smooth' });
+        prependWishToDOM(
+          row && row.name ? row.name : name,
+          row && row.wish ? row.wish : message,
+          formatWishDate(row && row.created_at)
+        );
+
+        guestbookForm.reset();
+
+        if (wishesScrollBox) {
+          wishesScrollBox.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        if (wishToast) {
+          wishToast.classList.remove('is-hidden');
+          setTimeout(() => {
+            wishToast.classList.add('is-hidden');
+          }, 4000);
+        }
+      } catch (err) {
+        setStatus(guestbookFormError, 'We couldn’t save your wish. Please try again.');
+      } finally {
+        isSubmittingWish = false;
+        if (guestbookSubmit) guestbookSubmit.disabled = false;
       }
-
-      wishToast.classList.remove('is-hidden');
-      setTimeout(() => {
-        wishToast.classList.add('is-hidden');
-      }, 4000);
     });
   }
 
-  renderStoredWishes();
+  loadGuestbookWishes();
 });
