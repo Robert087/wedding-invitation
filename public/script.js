@@ -608,9 +608,12 @@ document.addEventListener('DOMContentLoaded', () => {
       let userPauseUntil = 0;
       let galleryScrollPosition = scrollContainer.scrollLeft;
       let galleryIsVisible = false;
+      let isAutoplayScroll = false;
+      let pointerStart = null;
+      let horizontalGesture = false;
       const autoplaySpeed = 0.018;
 
-      function pauseGalleryAutoplay(duration = 2400) {
+      function pauseGalleryAutoplay(duration = 1800) {
         userPauseUntil = performance.now() + duration;
         scrollContainer.classList.remove('is-auto-moving');
       }
@@ -643,8 +646,10 @@ document.addEventListener('DOMContentLoaded', () => {
           if (now >= userPauseUntil) {
             scrollContainer.classList.add('is-auto-moving');
             galleryScrollPosition += delta * autoplaySpeed;
+            isAutoplayScroll = true;
             scrollContainer.scrollLeft = galleryScrollPosition;
             keepRibbonLooping();
+            isAutoplayScroll = false;
           }
         }
 
@@ -661,39 +666,56 @@ document.addEventListener('DOMContentLoaded', () => {
         galleryRafId = window.requestAnimationFrame(runGalleryAutoplay);
       }
 
-      ['pointerdown', 'touchstart', 'keydown'].forEach((eventName) => {
-        scrollContainer.addEventListener(eventName, () => {
+      scrollContainer.addEventListener('pointerdown', (event) => {
+        pointerStart = { x: event.clientX, y: event.clientY, decided: false };
+        horizontalGesture = false;
+      }, { passive: true });
+
+      scrollContainer.addEventListener('pointermove', (event) => {
+        if (!pointerStart || pointerStart.decided) return;
+        const deltaX = event.clientX - pointerStart.x;
+        const deltaY = event.clientY - pointerStart.y;
+        if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 8) return;
+
+        pointerStart.decided = true;
+        horizontalGesture = Math.abs(deltaX) > Math.abs(deltaY);
+        if (horizontalGesture) {
           galleryScrollPosition = scrollContainer.scrollLeft;
           pauseGalleryAutoplay();
-        }, { passive: true });
+        }
+      }, { passive: true });
+
+      function finishPointerGesture() {
+        if (horizontalGesture) {
+          galleryScrollPosition = scrollContainer.scrollLeft;
+          pauseGalleryAutoplay(1800);
+        }
+        pointerStart = null;
+        horizontalGesture = false;
+      }
+
+      scrollContainer.addEventListener('pointerup', finishPointerGesture, { passive: true });
+      scrollContainer.addEventListener('pointercancel', finishPointerGesture, { passive: true });
+
+      scrollContainer.addEventListener('keydown', (event) => {
+        if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+          galleryScrollPosition = scrollContainer.scrollLeft;
+          pauseGalleryAutoplay();
+        }
       });
 
-      scrollContainer.addEventListener('touchend', () => {
-        galleryScrollPosition = scrollContainer.scrollLeft;
-        pauseGalleryAutoplay(1800);
-      }, { passive: true });
-      scrollContainer.addEventListener('pointerup', () => {
-        galleryScrollPosition = scrollContainer.scrollLeft;
-        pauseGalleryAutoplay(1800);
-      }, { passive: true });
-
       scrollContainer.addEventListener('wheel', (evt) => {
-        galleryScrollPosition = scrollContainer.scrollLeft;
-        pauseGalleryAutoplay();
-        if (window.innerWidth > 768 && Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
-          const atStart = scrollContainer.scrollLeft <= 0;
-          const atEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 2;
-          if ((evt.deltaY > 0 && !atEnd) || (evt.deltaY < 0 && !atStart)) {
-            evt.preventDefault();
-            scrollContainer.scrollLeft += evt.deltaY * 0.85;
-            galleryScrollPosition = scrollContainer.scrollLeft;
-          }
+        if (Math.abs(evt.deltaX) > Math.abs(evt.deltaY)) {
+          galleryScrollPosition = scrollContainer.scrollLeft;
+          pauseGalleryAutoplay();
         }
-      }, { passive: false });
+      }, { passive: true });
 
       scrollContainer.addEventListener('scroll', () => {
-        if (performance.now() < userPauseUntil) {
+        const isExpectedAutoplayPosition = Math.abs(scrollContainer.scrollLeft - galleryScrollPosition) < 0.5;
+        if (!isAutoplayScroll && !isExpectedAutoplayPosition) {
           galleryScrollPosition = scrollContainer.scrollLeft;
+          pauseGalleryAutoplay();
         }
       }, { passive: true });
 
