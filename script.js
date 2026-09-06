@@ -228,6 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (prefersReducedMotion) {
         coverSection.classList.add('is-opened');
         body.classList.remove('is-locked');
+        body.classList.add('is-revealing-suite');
+        const invMain = document.getElementById('invitation-main');
+        if (invMain) invMain.classList.add('is-revealed');
         invitationOpened = true;
         audioToggle.classList.remove('is-hidden');
         triggerScrollReveals();
@@ -243,6 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
         playPersonalNoteSequence(() => {
           body.classList.remove('is-locked');
           body.classList.add('is-revealing-suite');
+          const invMain = document.getElementById('invitation-main');
+          if (invMain) invMain.classList.add('is-revealed');
           invitationOpened = true;
           triggerScrollReveals();
           triggerLiveWritingInView();
@@ -345,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && invitationOpened) {
         entry.target.classList.add('is-visible');
       }
     });
