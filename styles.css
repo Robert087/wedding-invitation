@@ -512,11 +512,12 @@ body.is-revealing-suite .suite-wrapper {
 }
 
 .suite-wrapper {
-  padding: 42px 18px 16px;
+  padding: 48px 18px 20px;
   display: flex;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(180deg, rgba(244, 239, 234, 0.22), transparent 78%);
 }
 
 .suite-wrapper::before {
@@ -528,7 +529,7 @@ body.is-revealing-suite .suite-wrapper {
   font-family: var(--font-display);
   font-size: clamp(4.8rem, 22vw, 8rem);
   letter-spacing: 0.12em;
-  color: rgba(197, 168, 128, 0.055);
+  color: rgba(197, 168, 128, 0.035);
   white-space: nowrap;
   pointer-events: none;
 }
@@ -536,58 +537,82 @@ body.is-revealing-suite .suite-wrapper {
 .suite-embossed {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 430px;
+  min-height: 620px;
   text-align: center;
-  /* Layer 1: Soft muted-gold outer letterpress hairline */
-  border: 1px solid rgba(197, 168, 128, 0.32);
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  padding: 30px 20px 24px;
-  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.05);
-  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(78, 19, 24, 0.32);
+  background-color: rgba(250, 248, 245, 0.94);
+  background-image: url('assets/images/paper-texture.svg');
+  background-size: 190px 190px;
+  padding: 48px 26px 38px;
+  box-shadow: 0 18px 38px -24px rgba(35, 25, 15, 0.26);
+  border-radius: 1px;
 }
 
-/* Layer 2: Extremely thin burgundy hairline border inset */
 .suite-embossed::before {
   content: "";
   position: absolute;
-  inset: 4px;
-  border: 1px solid rgba(78, 19, 24, 0.28);
-  border-radius: 1px;
+  inset: 8px;
+  border: 1px solid rgba(197, 168, 128, 0.68);
+  border-radius: 0;
   pointer-events: none;
+  z-index: 2;
+}
+
+.suite-embossed::after {
+  content: "";
+  position: absolute;
+  inset: -26px auto auto -30px;
+  width: 150px;
+  height: 220px;
+  opacity: 0.72;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 34% 22%, transparent 0 18px, rgba(78, 19, 24, 0.22) 19px 21px, transparent 22px),
+    radial-gradient(ellipse at 18% 51%, transparent 0 23px, rgba(78, 19, 24, 0.16) 24px 26px, transparent 27px),
+    linear-gradient(123deg, transparent 47%, rgba(78, 19, 24, 0.3) 48% 49%, transparent 50%),
+    linear-gradient(154deg, transparent 54%, rgba(78, 19, 24, 0.18) 55% 56%, transparent 57%);
+  transform: rotate(-8deg);
+}
+
+.suite-embossed > * {
+  position: relative;
+  z-index: 3;
 }
 
 .monogram-emboss {
-  margin-bottom: 14px;
+  margin-bottom: 24px;
   display: inline-block;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .monogram-img {
   display: block;
   margin: 0 auto;
+  width: 58px;
+  height: 58px;
 }
 
 .suite-honor {
   font-family: var(--font-sans);
-  font-size: 0.64rem;
+  font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
-  margin-bottom: 12px;
+  color: #5f574f;
+  margin-bottom: 24px;
 }
 
 .suite-names {
   font-family: var(--font-serif);
-  font-size: clamp(1.85rem, 6.8vw, 2.35rem);
+  font-size: clamp(2rem, 7.1vw, 2.7rem);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: 0.12em;
+  line-height: 1.16;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--color-deep-black);
-  margin-bottom: 14px;
+  margin-bottom: 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -605,20 +630,20 @@ body.is-revealing-suite .suite-wrapper {
 .suite-amp {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 0.72em;
-  color: var(--color-gold);
+  font-size: 0.78em;
+  color: var(--color-gold-muted);
   line-height: 1.1;
-  margin: 2px 0;
+  margin: 5px 0;
 }
 
 /* Warm Personal Copy */
 .suite-phrase {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.28rem;
   font-style: italic;
   font-weight: 300;
-  line-height: 1.45;
-  color: var(--color-charcoal);
+  line-height: 1.38;
+  color: #6c6259;
   margin-bottom: 18px;
 }
 
@@ -628,8 +653,8 @@ body.is-revealing-suite .suite-wrapper {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  max-width: 140px;
-  margin: 0 auto 18px;
+  max-width: 190px;
+  margin: 0 auto 24px;
 }
 
 .line-wing {
@@ -668,22 +693,22 @@ body.is-revealing-suite .suite-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
 }
 
 .suite-calendar-day {
   font-family: var(--font-sans);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--color-deep-black);
 }
 
 .suite-calendar-date {
   font-family: var(--font-serif);
-  font-size: 1.28rem;
-  letter-spacing: 0.2em;
+  font-size: 1.42rem;
+  letter-spacing: 0.22em;
   color: var(--color-gold-muted);
   font-weight: 400;
   display: flex;
@@ -693,7 +718,7 @@ body.is-revealing-suite .suite-wrapper {
 }
 
 .ceremony-direct {
-  margin-top: 12px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -729,22 +754,53 @@ body.is-revealing-suite .suite-wrapper {
 
 .btn-location-inline {
   display: inline-block;
-  padding: 8px 20px;
+  padding: 8px 2px 7px;
   font-family: var(--font-sans);
-  font-size: 0.65rem;
+  font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--color-deep-black);
-  border: 1px solid var(--color-deep-black);
-  border-radius: 1px;
-  transition: all 0.3s var(--ease-luxury);
+  color: var(--color-oxblood);
+  border: 0;
+  border-bottom: 1px solid rgba(78, 19, 24, 0.72);
+  border-radius: 0;
+  transition: color 0.3s ease, border-color 0.3s ease, letter-spacing 0.3s ease;
 }
 
-.btn-location-inline:hover {
-  background-color: var(--color-deep-black);
-  color: var(--color-ivory);
+.btn-location-inline:hover,
+.btn-location-inline:focus-visible {
+  color: var(--color-gold-muted);
+  border-color: var(--color-gold-muted);
+  letter-spacing: 0.33em;
+}
+
+@media (max-width: 380px) {
+  .suite-wrapper {
+    padding-inline: 12px;
+  }
+
+  .suite-embossed {
+    min-height: 570px;
+    padding: 40px 18px 30px;
+  }
+
+  .suite-names {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+    letter-spacing: 0.1em;
+  }
+
+  .suite-honor {
+    letter-spacing: 0.23em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .suite-names span,
+  .line-wing,
+  .btn-location-inline {
+    transition-duration: 0.001ms !important;
+  }
 }
 
 /* ==========================================================================
