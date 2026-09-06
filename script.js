@@ -380,6 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && invitationOpened) {
         entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
       }
     });
   }, {
@@ -394,6 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && invitationOpened) {
         triggerLiveWriting(entry.target);
+        writingObserver.unobserve(entry.target);
       }
     });
   }, {
@@ -558,17 +560,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Scroll listener
+  let childhoodInView = false;
+  let parallaxInView = false;
+  const sceneObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.target === nodeChildhood) childhoodInView = entry.isIntersecting;
+      if (entry.target === breakModule) parallaxInView = entry.isIntersecting;
+    });
+    if (childhoodInView || parallaxInView) {
+      window.requestAnimationFrame(() => {
+        if (childhoodInView) handleChildhoodTransformation();
+        if (parallaxInView) handleParallax();
+      });
+    }
+  }, { rootMargin: '12% 0px' });
+
+  if (nodeChildhood) sceneObserver.observe(nodeChildhood);
+  if (breakModule) sceneObserver.observe(breakModule);
+
+  // Scroll work is scheduled only while a scroll-reactive scene is near the viewport.
   const scrollCue = document.getElementById('suite-scroll-cue');
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (scrollCue && window.scrollY > 15) {
       scrollCue.classList.add('is-scrolled');
     }
-    if (!ticking) {
+    if (!ticking && (childhoodInView || parallaxInView)) {
       window.requestAnimationFrame(() => {
-        handleChildhoodTransformation();
-        handleParallax();
+        if (childhoodInView) handleChildhoodTransformation();
+        if (parallaxInView) handleParallax();
         ticking = false;
       });
       ticking = true;
@@ -584,9 +604,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const track = document.getElementById('horizontal-track');
     if (scrollContainer && track) {
       let galleryRafId = null;
-      let lastGalleryTime = performance.now();
+      let lastGalleryTime = 0;
       let userPauseUntil = 0;
       let galleryScrollPosition = scrollContainer.scrollLeft;
+      let galleryIsVisible = false;
       const autoplaySpeed = 0.018;
 
       function pauseGalleryAutoplay(duration = 2400) {
@@ -599,9 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const secondFrame = firstFrame ? firstFrame.nextElementSibling : null;
         if (!firstFrame || !secondFrame) return 0;
 
-        const firstRect = firstFrame.getBoundingClientRect();
-        const secondRect = secondFrame.getBoundingClientRect();
-        return secondRect.left - firstRect.left;
+        return secondFrame.offsetLeft - firstFrame.offsetLeft;
       }
 
       function keepRibbonLooping() {
@@ -629,6 +648,16 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
 
+        if (galleryIsVisible && !document.hidden) {
+          galleryRafId = window.requestAnimationFrame(runGalleryAutoplay);
+        } else {
+          galleryRafId = null;
+        }
+      }
+
+      function startGalleryAutoplay() {
+        if (galleryRafId || !galleryIsVisible || document.hidden || prefersReducedMotion) return;
+        lastGalleryTime = performance.now();
         galleryRafId = window.requestAnimationFrame(runGalleryAutoplay);
       }
 
@@ -668,10 +697,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, { passive: true });
 
-      galleryRafId = window.requestAnimationFrame(runGalleryAutoplay);
+      const galleryVisibilityObserver = new IntersectionObserver((entries) => {
+        galleryIsVisible = entries[0].isIntersecting;
+        if (galleryIsVisible) startGalleryAutoplay();
+      }, { rootMargin: '120px 0px' });
+      galleryVisibilityObserver.observe(horizontalModule);
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) startGalleryAutoplay();
+      });
 
       window.addEventListener('beforeunload', () => {
         if (galleryRafId) window.cancelAnimationFrame(galleryRafId);
+        galleryVisibilityObserver.disconnect();
       });
     }
   }
