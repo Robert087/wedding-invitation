@@ -509,6 +509,22 @@ body.is-revealing-suite .suite-wrapper {
   min-height: 100vh;
   position: relative;
   z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Keep the invitation out of the first paint; the intro sequence owns its reveal. */
+body.is-revealing-suite .invitation-container {
+  visibility: visible;
+  pointer-events: auto;
+  animation: suiteSceneFadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+body.is-locked .invitation-container {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .suite-wrapper {

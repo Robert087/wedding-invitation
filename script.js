@@ -228,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (prefersReducedMotion) {
         coverSection.classList.add('is-opened');
         body.classList.remove('is-locked');
+        body.classList.add('is-revealing-suite');
         invitationOpened = true;
         audioToggle.classList.remove('is-hidden');
         triggerScrollReveals();
